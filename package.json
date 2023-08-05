@@ -1,0 +1,52 @@
+{
+  "name": "pkg-name",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "",
+  "author": "winches",
+  "license": "MIT",
+  "keywords": [],
+  "sideEffects": false,
+  "bin": { "ts-start": "dist/index.js" },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "dev": "tsup --watch",
+    "build": "tsup --minify",
+    "start": "esno src/index.ts",
+    "lint": "eslint --cache --ext ts,tsx,vue .",
+    "changlog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
+    "release": "bumpp --execute='npm run changlog' --all"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": { "*": { "*": ["./dist/*", "./dist/index.d.ts"] } },
+  "files": ["dist"],
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "commander": "^10.0.0",
+    "inquirer": "^9.1.4",
+    "@winches/utils": "^0.0.4"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.40.0",
+    "@types/node": "^18.7.18",
+    "eslint": "^8.46.0",
+    "tsx": "^3.12.7",
+    "lint-staged": "^13.1.2",
+    "rimraf": "^4.1.2",
+    "simple-git-hooks": "^2.8.1",
+    "tsup": "^7.2.0",
+    "typescript": "^5.1.6"
+  },
+  "simple-git-hooks": { "pre-commit": "npx lint-staged" },
+  "lint-staged": { "*.{js,ts,tsx,vue}": ["eslint --fix"] }
+}
