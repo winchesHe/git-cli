@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-tabs */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -7,7 +8,7 @@ import select from '@inquirer/select'
 import prettier from 'prettier'
 import { detect, generateSmoothGradient, sleep, spinner } from '../utils'
 
-const defaultBanner = '欢迎使用git-hooks安装工具，git hooks 正在安装中...'
+const defaultBanner = '欢迎使用 git-hooks 安装工具'
 const gradientBanner = printColorLogs(defaultBanner)
 const cwd = process.cwd()
 const LOCKS = {
@@ -19,49 +20,58 @@ const LOCKS = {
 const COLORS = generateSmoothGradient('#5ffbf1', '#86a8e7', 8).reverse()
 
 export async function start() {
+  console.log(
+    (process.stdout.isTTY && process.stdout.getColorDepth() > 8)
+      ? `🚀 ${gradientBanner}`
+      : defaultBanner,
+  )
+
+  let agent = await detect({ cwd })
+  if (!agent) {
+    printWarnLogs('未检测到本地包管理，请手动选择')
+    agent = await select({
+      message: '选择一个包管理',
+      choices: [
+        {
+          name: 'npm',
+          value: 'npm',
+          description: 'npm 包管理工具',
+        },
+        {
+          name: 'yarn',
+          value: 'yarn',
+          description: 'yarn 包管理工具',
+        },
+        {
+          name: 'pnpm',
+          value: 'pnpm',
+          description: 'pnpm 包管理工具',
+        },
+      ],
+    })
+  }
+  else {
+    printSuccessLogs(`检测到本地包管理: ${agent}`)
+  }
+  console.log()
+
   const _while = () => {
     return run()
   }
   await spinner({
-    start: gradientBanner,
+    start: printColorLogs('git hooks 正在安装中...'),
     while: _while,
     colorArr: COLORS,
   })
 
   async function run() {
-    await sleep(3000)
-
     const pkg = await readPackage({
       cwd,
       normalize: false,
     }) as any
     const huskyPath = path.resolve(cwd, '.husky')
 
-    let agent = await detect({ cwd })
-    if (!agent) {
-      printWarnLogs('未检测到本地包管理，请手动选择')
-      agent = await select({
-        message: '选择一个包管理',
-        choices: [
-          {
-            name: 'npm',
-            value: 'npm',
-            description: 'npm is the most popular package manager',
-          },
-          {
-            name: 'yarn',
-            value: 'yarn',
-            description: 'yarn is an awesome package manager',
-          },
-          {
-            name: 'pnpm',
-            value: 'pnpm',
-            description: 'pnpm is an awesome package manager',
-          },
-        ],
-      })
-    }
-    else { printSuccessLogs(`检测到本地包管理: ${agent}`) }
+    await sleep(3000)
 
     const locks = LOCKS[agent as keyof typeof LOCKS]
     const hooksBash = `#!/usr/bin/env bash
