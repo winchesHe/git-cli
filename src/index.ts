@@ -4,11 +4,11 @@ import pkg from '../package.json'
 import { start } from './command/index'
 
 const program = new Command()
+
 program.version(pkg.version, '-v --version', '显示当前版本号')
 
 program
-  .description('ts cli 模版目录')
-  .option('-n, --name [projectName]', '项目名')
+  .description('git cli 为项目安装post-merge和post-rebase钩子')
   .action(start)
 
 program.parse(process.argv)

@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.0",
   "description": "",
-  "author": "winches",
+  "author": {
+    "name": "winches"
+  },
   "license": "MIT",
   "keywords": [],
   "sideEffects": false,
@@ -45,10 +47,12 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@winches/utils": "^0.0.4",
+    "@antfu/ni": "^0.21.5",
+    "@inquirer/select": "^1.2.7",
+    "@winches/utils": "^0.0.8",
     "chalk": "^5.2.0",
     "commander": "^10.0.0",
-    "inquirer": "^9.1.4",
+    "prettier": "^3.0.1",
     "read-pkg": "^8.0.0"
   },
   "devDependencies": {
