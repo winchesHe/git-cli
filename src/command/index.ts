@@ -2,6 +2,7 @@
 /* eslint-disable no-tabs */
 import fs from 'node:fs'
 import path from 'node:path'
+import { exec } from 'node:child_process'
 import { printColorLogs, printSuccessLogs, printWarnLogs } from '@winches/utils'
 import { readPackage } from 'read-pkg'
 import select from '@inquirer/select'
@@ -78,7 +79,10 @@ export async function start() {
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 check_run() {
-	echo "$changed_files" | grep --quiet "$1" && eval "$2"
+	if (echo "$changed_files" | grep --quiet "$1"); then
+    echo "检测到 ${locks} 变更，开始更新依赖"
+    eval "$2"
+  fi
 }
 
 check_run ${locks} "${agent} install"
@@ -87,7 +91,7 @@ check_run ${locks} "${agent} install"
 huskyDir=$(dirname -- "$0")
 . "$huskyDir/_/husky.sh"
 
-. "$huskyDir/scripts/update-dep.sh"
+. "$huskyDir/scripts/update-dep"
 `
 
     let isExistHuskyPkg = false
@@ -104,8 +108,8 @@ huskyDir=$(dirname -- "$0")
           pkg.husky.hooks = {
             ...pkg.husky.hooks,
             ...({
-              'post-merge': '. \"./.husky/scripts/update-dep.sh\"',
-              'post-rebase': '. \"./.husky/scripts/update-dep.sh\"',
+              'post-merge': '. \"./.husky/scripts/update-dep\"',
+              'post-rebase': '. \"./.husky/scripts/update-dep\"',
             }),
           }
 
@@ -126,10 +130,16 @@ huskyDir=$(dirname -- "$0")
       addHooks()
     }
 
-    if (!isExistHuskyPkg && !isExistHusky)
+    if (!isExistHuskyPkg && !isExistHusky) {
       printWarnLogs('git hooks 安装失败，目前只支持搭配 husky 使用')
-    else
+    }
+    else {
+      const cmd1 = 'chmod +x .husky/post-merge'
+      const cmd2 = 'chmod +x .husky/post-rebase'
+      exec(cmd1)
+      exec(cmd2)
       printSuccessLogs('✨ 安装 git hooks !')
+    }
 
     function addHooks() {
       fs.writeFileSync(path.resolve(huskyPath, 'post-merge'), hooksBin, 'utf-8')
