@@ -24,12 +24,17 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "require": "./dist/index.js",
+      "import": "./dist/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "require": "./dist/utils/index.js",
+      "import": "./dist/utils/index.js"
     }
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -52,8 +57,10 @@
     "chalk": "^5.2.0",
     "commander": "^10.0.0",
     "find-up": "^6.3.0",
+    "log-update": "^5.0.1",
     "prettier": "^3.0.1",
-    "read-pkg": "^8.0.0"
+    "read-pkg": "^8.0.0",
+    "sisteransi": "^1.0.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.40.0",
