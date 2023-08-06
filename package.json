@@ -1,7 +1,7 @@
 {
   "name": "@winches/git-cli",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "author": {
     "name": "winches"
@@ -15,7 +15,7 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "dev": "tsup --watch",
-    "build": "tsup --minify",
+    "build": "tsup-node",
     "start": "esno src/index.ts",
     "lint": "eslint --cache --ext ts,tsx,vue .",
     "changlog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
