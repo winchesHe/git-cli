@@ -47,11 +47,11 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@antfu/ni": "^0.21.5",
     "@inquirer/select": "^1.2.7",
     "@winches/utils": "^0.0.8",
     "chalk": "^5.2.0",
     "commander": "^10.0.0",
+    "find-up": "^6.3.0",
     "prettier": "^3.0.1",
     "read-pkg": "^8.0.0"
   },

@@ -4,9 +4,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { printColorLogs, printSuccessLogs, printWarnLogs } from '@winches/utils'
 import { readPackage } from 'read-pkg'
-import { detect } from '@antfu/ni'
 import select from '@inquirer/select'
 import prettier from 'prettier'
+import { detect } from '../utils'
 
 const defaultBanner = '欢迎使用git-hooks安装工具，git hooks 正在安装中...'
 const gradientBanner = printColorLogs(defaultBanner)
@@ -115,7 +115,7 @@ huskyDir=$(dirname -- "$0")
   if (!isExistHuskyPkg && !isExistHusky)
     printWarnLogs('git hooks 安装失败，目前只支持搭配 husky 使用')
   else
-    printSuccessLogs('安装 git hooks !')
+    printSuccessLogs('✨ 安装 git hooks !')
 
   function addHooks() {
     fs.writeFileSync(path.resolve(huskyPath, 'post-merge'), hooksBin, 'utf-8')
