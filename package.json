@@ -1,5 +1,5 @@
 {
-  "name": "pkg-name",
+  "name": "@winches/git-cli",
   "type": "module",
   "version": "0.0.0",
   "description": "",
@@ -10,7 +10,7 @@
   "keywords": [],
   "sideEffects": false,
   "bin": {
-    "ts-start": "dist/index.js"
+    "git-cli": "dist/index.js"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
