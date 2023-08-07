@@ -79,8 +79,8 @@ export async function start() {
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 check_run() {
-	if (echo "$changed_files" | grep --quiet "$1"); then
-    echo "检测到 ${locks} 变更，开始更新依赖"
+  if (echo "$changed_files" | grep --quiet "$1"); then
+    echo "检测到 pnpm-lock.yaml 变更，开始更新依赖"
     eval "$2"
   fi
 }
