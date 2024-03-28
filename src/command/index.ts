@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-/* eslint-disable no-tabs */
+
 import fs from 'node:fs'
 import path from 'node:path'
 import { exec } from 'node:child_process'
@@ -75,19 +75,19 @@ export async function start() {
     await sleep(3000)
 
     const locks = LOCKS[agent as keyof typeof LOCKS]
-    const hooksBash = `#!/usr/bin/env bash
+    const hooksBash = `#!/usr/bin/env sh
 changed_files="$(git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD)"
 
 check_run() {
   if (echo "$changed_files" | grep --quiet "$1"); then
-    echo "检测到 pnpm-lock.yaml 变更，开始更新依赖"
+    echo "Detected changes in ${locks}, starting dependency update"
     eval "$2"
   fi
 }
 
-check_run ${locks} "${agent} install"
+check_run ${locks} "${agent} install${agent === 'pnpm' ? '--color' : ''}"
 `
-    const hooksBin = `#!/usr/bin/env bash
+    const hooksBin = `#!/usr/bin/env sh
 huskyDir=$(dirname -- "$0")
 . "$huskyDir/_/husky.sh"
 
