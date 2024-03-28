@@ -18,8 +18,9 @@
     "build": "tsup-node",
     "start": "esno src/index.ts",
     "lint": "eslint --cache --ext ts,tsx,vue .",
-    "changlog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
-    "release": "bumpp --execute=\"npm run changlog\" --all"
+    "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s",
+    "release": "bumpp --execute=\"npm run changelog\" --all",
+    "prepare": "npx simple-git-hooks"
   },
   "exports": {
     ".": {
