@@ -1,3 +1,18 @@
+## [0.0.4](https://github.com/winchesHe/git-cli/compare/v0.0.1...v0.0.4) (2024-03-28)
+
+
+### Bug Fixes
+
+* style error ([c38edb6](https://github.com/winchesHe/git-cli/commit/c38edb68591007735171c50857e7564dfbf60797))
+
+
+### Features
+
+* add bumpp ([bbd8bec](https://github.com/winchesHe/git-cli/commit/bbd8bec16837bb7a4fd601a69fe514e89a938c9b))
+* add pnpm color output ([de110c3](https://github.com/winchesHe/git-cli/commit/de110c342418afb5e3d7ec82bbaee75acd772250))
+
+
+
 
 ## 0.0.3 (2023-08-07)
 
